@@ -1,7 +1,10 @@
+// Dependencies 
 const express = require("express");
 
+// Setup our default port for Heroku to connect
 const PORT = process.env.PORT || 8080;
 
+// Variable to handle middleware and Handlebars
 const app = express();
 
 // Serve static content for the app from the "public" directory in the application directory.
