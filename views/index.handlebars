@@ -1,0 +1,60 @@
+
+  <div class="container">
+    <div class="logo text-center">
+      <img src="/images/logo.jpg" height="300" width="450">
+    </div>
+
+    <div class="row text-center add">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="input text-center">
+          <h1 class="heading header" id="add">Add A Burger</h1>
+          <div class="form-group">
+            <form action="api/burgers" name="router" method="POST" class="addBurger text-center">
+              <textarea id="text" type="text" name="burger_name" rows="2" cols="45"></textarea>
+              <button  type="submit" id="SubmitBtn">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main row">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="left text-center">
+        <h1 class="heading header">Burger</h1>
+        <ul>
+          {{#each burgers}} 
+            {{#unless devoured}}
+              <li>
+                <p class="newBurger">{{this.burger_name}}</p>
+                  <input type="hidden" name="devoured" value="true">
+                  <button class="devourBtn" type="submit">Devour it</button>
+                    {{#if this.devoured}}Devoured
+                      {{else}}Devour
+                    {{/if}}
+                  </button>
+              </li> 
+            {{/unless}} 
+          {{/each}}
+        </ul>
+      </div>
+    </div> 
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="right" text-center>
+        <h1 class="heading header">Burgers Devoured</h1>
+        <form action="api/burgers/{{this.id}}?_method=PUT" method="POST" class="post_devoured">
+          <div class="form-group">
+            <input type="hidden" name="devoured" value="true">
+            <button class="devourBtn"type="submit">Devour it</button>
+        </form>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 
+
+  {{!-- <form action="api/burgers/{{this.id}}?_method=PUT" method="POST" class="dev"> --}}
+
+
+{{!-- Handlebars partials are templates that can be shared among different templates. They are written as {{> partialName}}. Before using them in the HTML, we need to register the partial using Handlebars.registerPartial method. --}}

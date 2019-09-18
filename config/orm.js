@@ -1,7 +1,7 @@
 // Used from problemset 
 
 // Import MySQL connection 
-const connection = require("../connection.js");
+const connection = require("../config/connection.js");
 
 // Helper function for SQL syntax.
 // Let's say we want to pass 3 values into the mySQL query.
@@ -34,7 +34,7 @@ let orm = {
   // Shows all the burgers
   selectAll: function (tableInput, cb) {
     let queryString = 'SELECT * FROM ' + tableInput + ';';
-    connection.query(queryString, function (err, result) {
+    connection.query(queryString, function(err, result) {
       if (err) throw err;
       cb(result);
     });
@@ -52,7 +52,7 @@ let orm = {
 
     console.log(queryString);
 
-    connection.query(queryString, vals, function (err, result) {
+    connection.query(queryString, vals, function(err, result) {
       if (err) throw err;
       cb(result);
     });

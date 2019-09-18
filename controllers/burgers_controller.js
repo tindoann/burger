@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
   burger.selectAll(function (data) {
     // Store the data we receive as an object to our index 
     let burgerObj = {
-      burgers: data
+      burger: data
     };
     // Display content on the page
     console.log(burgerObj);
