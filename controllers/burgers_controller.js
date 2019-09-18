@@ -13,7 +13,7 @@ const burger = require('../models/burgers.js');
 router.get('/', function (req, res) {
 
   //The root will show all the burgers
-  burger.selectAll(function (data) {
+  burger.selectAll(function(data) {
     // Store the data we receive as an object to our index 
     let burgerObj = {
       burger: data
@@ -30,7 +30,7 @@ router.put('/api/burgers/:id', function (req, res) {
 
   burger.updateOne({
     'devoured': req.body.devoured},
-    condition, function (result) {
+    condition, function(result) {
       if (result.changeRows === 0) {
         return res.status(404).end();
       } else {
@@ -39,17 +39,29 @@ router.put('/api/burgers/:id', function (req, res) {
   });
 });
 
-
 // Post request that adds a new burger with a create method
 router.post('/api/burgers', function (req, res) {
   burger.insertOne(
-    ['burger_name', req.body.burger_name],
+    ['burger_name', devourted], [req.body.burger_name, req.body.devoured],
     function (result) {
       // Send back the ID of the new burger
       res.json({
         id: result.insertId});
     });
 });
+
+router.delete('api/burger/:id', function(req, res) {
+  let condition = 'id = ' + req.params.id; 
+  console.log('condition', condition); 
+
+  burger.deleteOne(condition, function(result) {
+    if (result.changeRows === 0) {
+      return res.status(404).end(); 
+    } else {
+      res.status(200).end(); 
+    }
+  }); 
+}); 
 
 // Export routes for server.js to use
 module.exports = router; 
