@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import the model (burgers) to use its database functions. 
-const burger = require('../models/burgers.js');
+const burger = require('../models/burger.js');
 
 // Create all our get, put, and post routes and set up logic within those routes where required. 
 
@@ -24,6 +24,7 @@ router.get('/', function (req, res) {
   });
 });
 
+// Puts and Delete reques are similarly constructed
 router.put('/api/burgers/:id', function (req, res) {
   let condition = 'id = ' + req.params.id;
   console.log('condition', condition);
@@ -50,7 +51,8 @@ router.post('/api/burgers', function (req, res) {
     });
 });
 
-router.delete('api/burger/:id', function(req, res) {
+// Deletes the burger 
+router.delete('api/burgers/:id', function(req, res) {
   let condition = 'id = ' + req.params.id; 
   console.log('condition', condition); 
 
@@ -63,5 +65,5 @@ router.delete('api/burger/:id', function(req, res) {
   }); 
 }); 
 
-// Export routes for server.js to use
+// E\oxport routes for server.js to use
 module.exports = router; 

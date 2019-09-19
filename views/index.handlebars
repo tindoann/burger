@@ -1,26 +1,30 @@
-
+{{!-- Setup the index.handlebars template that it can render --}}
   <div class="container">
     <div class="logo text-center">
-      <img src="/images/logo.jpg" height="300" width="450">
+      <img src="/images/logo.jpg" class="rounded-lg" height="300" width="450">
     </div>
 
-    <div class="row text-center add">
-      <div class="col-lg-12 mt-8">
-        <div class="input text-center">
-          <h1 class="heading header" id="add">Add A Burger</h1>
-          <div class="form-group">
-            <form action="api/burgers" name="router" method="POST" class="addBurger text-center">
-              <textarea id="text" type="text" name="burger_name" rows="2" cols="45"></textarea>
-              <button  type="submit" id="SubmitBtn">Submit</button>
-            </form>
-          </div>
-        </div>
+    <h1 class="text-center">Eat-Da-Burger!</h1>
+
+    <!-- Row for list of burgers enterend -->
+    <div class="row">
+      <!-- Left side: Burgers entered, but not devoured -->
+      <div class="col-md-5 burger-container" id="not-devoured">
+        <!-- Pass in data from server-->
+        <ul class="list-group">
+          {{#each burgers}}
+            {{#unless devoured}}
+              <li>
+                <span class="label" id={{this.id}}>{{this.id}}, {{this.burger_name}}</span>
+                <button class="devourBtn" type="submit" data-id="{{this.id}}">Devour it</button>
+              </li>
+        </ul>
       </div>
     </div>
-  </div>
 
-  <div class="main row">
-    <div class="col-lg-3">
+    <div class="main row">
+    <div class="col-lg-3 burger-container" id="not-devoured">
+      <!-- Pass in data from the server  -->
       <div class="left text-center">
         <h1 class="heading header">Burger</h1>
         <ul>
@@ -40,6 +44,26 @@
         </ul>
       </div>
     </div> 
+
+    <div class="row text-center add">
+      <div class="col-lg-12 mt-8">
+        <div class="input text-center">
+          <h1 class="heading header" id="add">Add A Burger</h1>
+          <div class="form-group">
+            <form action="api/burgers" name="router" method="POST" class="addBurger text-center">
+              <textarea id="text" type="text" name="burger_name" rows="2" cols="45"></textarea>
+              <button  type="submit" id="SubmitBtn">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="col-lg-3">
+      <div class="panel-heading" id="lefthead"><strong></strong></div>
 
     {{!-- Form Section  --}}
     <div class="col-lg-3">

@@ -10,11 +10,9 @@ const connection = require("../config/connection.js");
 // ["?", "?", "?"].toString() => "?,?,?";
 function printQuestionMarks(num) {
   let arr = [];
-
-  for (var i = 0; i < num; i++) {
-    arr.push('?')
+  for (let i = 0; i < num; i++) {
+    arr.push('?'); 
   }
-
   return arr.toString();
 }
 
@@ -32,14 +30,17 @@ function objToSql(ob) {
 
 let orm = {
   // Shows all the burgers
-  selectAll: function (tableInput, cb) {
+  selectAll: function(tableInput, cb) {
     let queryString = 'SELECT * FROM ' + tableInput + ';';
     connection.query(queryString, function(err, result) {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       cb(result);
     });
   },
 
+  // Adds a burger
   insertOne: function (table, cols, vals, cb) {
     let queryString = 'INSERT INTO ' + table;
 
@@ -53,11 +54,14 @@ let orm = {
     console.log(queryString);
 
     connection.query(queryString, vals, function(err, result) {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       cb(result);
     });
   },
 
+  // Update devoured to true
   updateOne: function (table, objColVals, condition, cb) {
     let queryString = 'UPDATE ' + table; 
 
@@ -67,14 +71,18 @@ let orm = {
     queryString += condition; 
 
     console.log(queryString); 
+    
     connection.query(queryString, function(err, result) {
-      if (err) throw err; 
+      if (err) {
+        throw err; 
+      }
       cb(result); 
     }); 
   },
 
+  // Removes a burger from the browser
   deleteOne: function(table, condition, cb) {
-    var queryString = "DELETE FROM " + table;
+    let queryString = "DELETE FROM " + table;
     queryString += " WHERE ";
     queryString += condition;
 
@@ -82,11 +90,12 @@ let orm = {
 
     connection.query(queryString, function(err, result) {
         if (err) {
-            throw err
+          throw err
         }
         cb(result);
     });
   }
 }; 
 
+// Export the ORM 
 module.exports = orm; 

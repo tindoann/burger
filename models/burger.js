@@ -1,5 +1,5 @@
 
-// IMport orm into burger
+// Import orm from config into burger to be used by the file 
 const orm = require('../config/orm.js');
 
 // Call the ORM function using burger specific input for the ORM
@@ -17,12 +17,14 @@ let burger = {
     });
   },
 
+  // Changes devoured to true
   updateOne: function(objColVals, condition, cb) {
-    orm.updateOne('burgers', condition, function(res) {
+    orm.updateOne('burgers', objColVals, condition, function(res) {
       cb(res);
     });
   }, 
 
+  // Removes a burger
   deleteOne: function(condition, cb) {
     orm.deleteOne('burgers', condition, function(res) {
       cb(res); 
