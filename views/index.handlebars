@@ -1,84 +1,45 @@
 {{!-- Setup the index.handlebars template that it can render --}}
-  <div class="container">
+  <div class="container content text-center">
+
+    <h1 class="text-center">Eat-Da-Burger!</h1>
+
     <div class="logo text-center">
       <img src="/images/logo.jpg" class="rounded-lg" height="300" width="450">
     </div>
 
-    <h1 class="text-center">Eat-Da-Burger!</h1>
+    {{!-- UNEATEN BURGERS --}}
 
-    <!-- Row for list of burgers enterend -->
-    <div class="row">
-      <!-- Left side: Burgers entered, but not devoured -->
-      <div class="col-md-5 burger-container" id="not-devoured">
-        <!-- Pass in data from server-->
-        <ul class="list-group">
-          {{#each burgers}}
-            {{#unless devoured}}
-              <li>
-                <span class="label" id={{this.id}}>{{this.id}}, {{this.burger_name}}</span>
-                <button class="devourBtn" type="submit" data-id="{{this.id}}">Devour it</button>
-              </li>
+        <ul class="list-group nondevoured-burgers">
+            {{#each burger}}
+                {{#unless devoured}}
+                    {{> burgers/burger-block devoured=true}}
+                {{/unless}}
+            {{/each}}
         </ul>
-      </div>
-    </div>
 
-    <div class="main row">
-    <div class="col-lg-3 burger-container" id="not-devoured">
-      <!-- Pass in data from the server  -->
-      <div class="left text-center">
-        <h1 class="heading header">Burger</h1>
-        <ul>
-          {{#each burgers}} 
-            {{#unless devoured}}
-              <li>
-                <p class="newBurger">{{this.burger_name}}</p>
-                  <input type="hidden" name="devoured" value="true">
-                  <button class="devourBtn" type="submit">Devour it</button>
-                    {{#if this.devoured}}Devoured
-                      {{else}}Devour
-                    {{/if}}
-                  </button>
-              </li> 
-            {{/unless}} 
-          {{/each}}
+
+        {{!-- DEVOURED SECTION --}}
+        <ul class="list-group devoured-burgers">
+            {{#each burger}}
+                {{#if devoured}} 
+                    {{> burgers/burger-block devoured=false}}
+                {{/if}}
+            {{/each}}
         </ul>
-      </div>
-    </div> 
 
-    <div class="row text-center add">
-      <div class="col-lg-12 mt-8">
-        <div class="input text-center">
-          <h1 class="heading header" id="add">Add A Burger</h1>
-          <div class="form-group">
-            <form action="api/burgers" name="router" method="POST" class="addBurger text-center">
-              <textarea id="text" type="text" name="burger_name" rows="2" cols="45"></textarea>
-              <button  type="submit" id="SubmitBtn">Submit</button>
-            </form>
+
+        {{!-- MAIN FORM  --}}
+        <form class="create-form">
+          <div class="col-lg-3">
+            <div class="form-group text-center">
+              <label for="submitBtn">Add a burger</label>
+              <input type="text" name="name" placeholder="Add a burger" class="burger_name" id="addburger">
+              <button type="submit" class="submitBtn mt-3">Submit</button>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-    <div class="col-lg-3">
-      <div class="panel-heading" id="lefthead"><strong></strong></div>
-
-    {{!-- Form Section  --}}
-    <div class="col-lg-3">
-      <div class="right" text-center>
-        <h3 class="heading header">Burgers Devoured</h3>
-        <form action="api/burgers/{{this.id}}?_method=PUT" method="POST" class="post_devoured">
-          <div class="form-group">
-            <input type="hidden" name="devoured" value="true">
-            <button class="devourBtn"type="submit">Devour it</button>
         </form>
-        </div>
-      </form>
-    </div>
   </div>
-</div> 
+        
 
 
 

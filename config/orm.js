@@ -24,6 +24,8 @@ function objToSql(ob) {
   for (let key in ob) {
     arr.push(key + '=' + ob[key]);
   }
+
+  // Seperates an array of strings with commas
   return arr.toString();
 }
 // Object Relational Mapper (ORM)
@@ -31,8 +33,10 @@ function objToSql(ob) {
 let orm = {
   // Shows all the burgers
   selectAll: function(tableInput, cb) {
+    console.log('I am not getting here')
     let queryString = 'SELECT * FROM ' + tableInput + ';';
     connection.query(queryString, function(err, result) {
+      console.log('what up brah')
       if (err) {
         throw err;
       }
@@ -62,16 +66,16 @@ let orm = {
   },
 
   // Update devoured to true
-  updateOne: function (table, objColVals, condition, cb) {
+  updateOne: function (table, objColVals, devoured, cb) {
     let queryString = 'UPDATE ' + table; 
 
     queryString += ' SET '; 
     queryString += objToSql(objColVals); 
     queryString += ' WHERE '; 
-    queryString += condition; 
+    queryString += devoured; 
 
     console.log(queryString); 
-    
+
     connection.query(queryString, function(err, result) {
       if (err) {
         throw err; 
@@ -81,10 +85,10 @@ let orm = {
   },
 
   // Removes a burger from the browser
-  deleteOne: function(table, condition, cb) {
+  deleteOne: function(table, devoured, cb) {
     let queryString = "DELETE FROM " + table;
     queryString += " WHERE ";
-    queryString += condition;
+    queryString += devoured;
 
     console.log(queryString);
 

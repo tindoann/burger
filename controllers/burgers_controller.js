@@ -4,25 +4,26 @@
 // Dependencies 
 const express = require('express');
 const router = express.Router();
-
-// Import the model (burgers) to use its database functions. 
 const burger = require('../models/burger.js');
 
 // Create all our get, put, and post routes and set up logic within those routes where required. 
 
 router.get('/', function (req, res) {
-
   //The root will show all the burgers
   burger.selectAll(function(data) {
-    // Store the data we receive as an object to our index 
-    let burgerObj = {
-      burger: data
+    console.log('the data');
+    //Store the data we receive as an object to our index 
+    // testing connection
+    // res.json({
+    // message: 'hello world'
+    let hbsObject = {
+      burgers: data
     };
-    // Display content on the page
-    console.log(burgerObj);
-    res.render('index', burgerObj);
+    // // Display content on the page
+    console.log(hbsObject);
+    res.render('index', hbsObject);
+    }); 
   });
-});
 
 // Puts and Delete reques are similarly constructed
 router.put('/api/burgers/:id', function (req, res) {
@@ -41,12 +42,22 @@ router.put('/api/burgers/:id', function (req, res) {
 });
 
 // Post request that adds a new burger with a create method
+// api/burger has to be the same as burgers: data
 router.post('/api/burgers', function (req, res) {
+
+  const burgerName = req.body.burger_name;
+
   burger.insertOne(
-    ['burger_name', devourted], [req.body.burger_name, req.body.devoured],
-    function (result) {
+    ['burger_name', 'devoured'], [burgerName, req.body.devoured],
+    function (error, result) {
+      if (error) {
+        return res.status(401).json({
+          message: 'Not able to a'
+        })
+      }
       // Send back the ID of the new burger
       res.json({
+        burger_name: burgerName,
         id: result.insertId});
     });
 });
@@ -65,5 +76,5 @@ router.delete('api/burgers/:id', function(req, res) {
   }); 
 }); 
 
-// E\oxport routes for server.js to use
+// Eport routes for server.js to use
 module.exports = router; 
